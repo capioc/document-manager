@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
+import { AssignDialogComponent } from 'src/app/document-manager/assign-dialog/assign-dialog.component';
 import { UploadService } from '../upload.service';
 
 @Component({
   selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+  templateUrl: './upload-dialog.component.html',
+  styleUrls: ['./upload-dialog.component.scss']
 })
-export class DialogComponent implements OnInit {
+export class UploadDialogComponent implements OnInit {
   //TODO: declare better vars;
   progress;
   canBeClosed = true;
@@ -18,8 +19,9 @@ export class DialogComponent implements OnInit {
   uploadSuccessful = false;
 
   constructor( 
-    public dialogRef: MatDialogRef<DialogComponent>,
-    public uploadService: UploadService
+    public assignDialog: MatDialog,
+    public uploadDialogRef: MatDialogRef<UploadDialogComponent>,
+    public uploadService: UploadService,
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class DialogComponent implements OnInit {
   closeDialog() {
     // if everything was uploaded already, just close dialog
     if (this.uploadSuccessful) {
-      return this.dialogRef.close();
+      return this.uploadDialogRef.close();
     }
 
     // set the component stat to "uploading"
@@ -67,7 +69,7 @@ export class DialogComponent implements OnInit {
 
     // the dialog should not be close while uploading
     this.canBeClosed = false;
-    this.dialogRef.disableClose = true;
+    this.uploadDialogRef.disableClose = true;
 
     // Hide the cancel-button
     this.showCancelButton = false;
@@ -76,7 +78,7 @@ export class DialogComponent implements OnInit {
     forkJoin(allProgressObservables).subscribe(end => {
       // ... the dialog can be closed again...
       this.canBeClosed = true;
-      this.dialogRef.disableClose = false;
+      this.uploadDialogRef.disableClose = false;
 
       // ... the upload was successful...
       this.uploadSuccessful = true;
@@ -84,7 +86,12 @@ export class DialogComponent implements OnInit {
       // ... and the component is no longer uploading
       this.uploading = false;
     });
+  }
 
-
+  openAssignDialog() {
+    let dialogRef = this.assignDialog.open(AssignDialogComponent, {
+      width: '75%',
+      height: '75%',
+    })
   }
 }

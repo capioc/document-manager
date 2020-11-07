@@ -8,13 +8,13 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { from } from 'rxjs';
-import { DialogComponent } from './dialog/dialog.component';
+import { UploadDialogComponent } from './upload-dialog/upload-dialog.component';
 import { UploadService } from './upload.service';
 
 
 
 @NgModule({
-  declarations: [UploadComponent, DialogComponent],
+  declarations: [UploadComponent, UploadDialogComponent],
   imports: [
     CommonModule,
     MatButtonModule,
@@ -24,8 +24,8 @@ import { UploadService } from './upload.service';
     BrowserAnimationsModule,
     MatProgressBarModule
   ],
-  exports: [UploadComponent, DialogComponent],
-  entryComponents: [DialogComponent], // Add the DialogComponent as entry component
+  exports: [UploadComponent, UploadDialogComponent],
+  entryComponents: [UploadDialogComponent], // Add the DialogComponent as entry component
   providers: [UploadService],
 })
 export class UploadModule { }
