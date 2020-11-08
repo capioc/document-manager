@@ -11,7 +11,7 @@ const handleError = (error) => console.error('error handler\n',error);
 
 (async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true });
+    await mongoose.connect('mongodb://mongodb:27017/test', { useNewUrlParser: true });
   } catch (error) {
     handleError(error);
   }

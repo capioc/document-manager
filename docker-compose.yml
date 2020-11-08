@@ -1,0 +1,31 @@
+version: '3'
+services:
+  client:
+    container_name: document-manager-client
+    restart: always
+    build: ./client
+    ports:
+      - '8000:4200'
+    volumes:
+      - ./client:/usr/src/app
+  server:
+    container_name: document-manager-server
+    restart: always
+    build: ./server
+    environment:
+      NODE_ENV: development
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./server:/usr/src/app
+    external_links:
+      - mongo
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - data:/data/db
+
+volumes:
+  data:
