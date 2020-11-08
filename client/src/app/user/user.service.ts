@@ -16,7 +16,7 @@ export class UserService {
 
   getUsersByName(name: string): Observable<User[]> {
     // return this.http.get<User[]>(this.url+`q?name=${name}`);
-    if (!name.trim()) {
+    if (!name) {
       // if not search term, return empty hero array.
       return of([]);
     }
