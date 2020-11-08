@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
 import { AssignDialogComponent } from 'src/app/document-manager/assign-dialog/assign-dialog.component';
@@ -19,6 +19,8 @@ export class UploadDialogComponent implements OnInit {
   uploading = false;
   uploadSuccessful = false;
   assignedUsers: User[];
+  
+  @Output() uploadFinished = new EventEmitter<boolean>();
 
   constructor( 
     public assignDialog: MatDialog,
@@ -49,6 +51,7 @@ export class UploadDialogComponent implements OnInit {
   closeDialog() {
     // if everything was uploaded already, just close dialog
     if (this.uploadSuccessful) {
+      this.uploadFinished.emit(true);
       return this.uploadDialogRef.close();
     }
 
