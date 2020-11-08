@@ -8,6 +8,8 @@ import { MatChipsModule} from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -16,10 +18,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     MatAutocompleteModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatChipsModule,
+    MatDialogModule,
     FormsModule,
     ReactiveFormsModule
   ],

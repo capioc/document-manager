@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
 import { AssignDialogComponent } from 'src/app/document-manager/assign-dialog/assign-dialog.component';
+import { User } from 'src/app/user/user';
 import { UploadService } from '../upload.service';
 
 @Component({
@@ -17,11 +18,12 @@ export class UploadDialogComponent implements OnInit {
   showCancelButton = true;
   uploading = false;
   uploadSuccessful = false;
+  assignedUsers: User[];
 
   constructor( 
     public assignDialog: MatDialog,
     public uploadDialogRef: MatDialogRef<UploadDialogComponent>,
-    public uploadService: UploadService,
+    public uploadService: UploadService
   ) { }
 
   ngOnInit(): void {
@@ -54,7 +56,7 @@ export class UploadDialogComponent implements OnInit {
     this.uploading = true;
 
     // start the upload and save the progress map
-    this.progress = this.uploadService.upload(this.files);
+    this.progress = this.uploadService.upload(this.files, this.assignedUsers);
 
     // convert the progress map into an array
     let allProgressObservables = [] // Array.from(this.progress.values());
@@ -90,8 +92,16 @@ export class UploadDialogComponent implements OnInit {
 
   openAssignDialog() {
     let dialogRef = this.assignDialog.open(AssignDialogComponent, {
-      width: '75%',
-      height: '75%',
+      width: '50%',
+      height: '35%',
+      data: this.assignedUsers
     })
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      this.assignedUsers = result;
+    });
   }
+
+
 }

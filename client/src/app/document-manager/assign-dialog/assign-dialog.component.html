@@ -1,35 +1,46 @@
-<form class="example-form">
-  <mat-form-field class="example-full-width">
-    <mat-chip-list #chipList>
+<h2 mat-dialog-title>Assign users to documents</h2>
+<div mat-dialog-content>
+  <form class="assign-form">
+    <mat-form-field class="full-width">
+      <mat-chip-list #chipList>
         <mat-chip
-            *ngFor="let u of assignedUsers"
-            [selectable]="selectable"
-            [removable]="removable"
-            (removed)="remove(u)">
-            {{u.firstname}}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          *ngFor="let u of assignedUsers"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(u)"
+        >
+          <span>{{ u.firstname }}</span>
+          <span style="margin-left: 8px;">{{ u.lastname }}</span>
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
-    
-    <input
-      type="text"
-      #userInput
-      placeholder="Pick one"
-      aria-label="Number"
-      matInput
-      [formControl]="userControl"
-      [matAutocomplete]="auto"
-      [matChipInputFor]="chipList"
-      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+
+        <input
+          type="text"
+          #userInput
+          placeholder="Pick one"
+          aria-label="Number"
+          matInput
+          [formControl]="userControl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        />
+      </mat-chip-list>
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="selected($event)"
       >
-    </mat-chip-list>
-    <mat-autocomplete
-      #auto="matAutocomplete"
-      (optionSelected)="selected($event)"
-    >
-      <mat-option *ngFor="let user of users$ | async" [value]="user">
-        {{ user.firstname }}
-        {{ user.lastname }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+        <mat-option *ngFor="let user of users$ | async" [value]="user">
+          {{ user.firstname }}
+          {{ user.lastname }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>
+
+<mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-raised-button [mat-dialog-close]="assignedUsers">Assign</button>
+</mat-dialog-actions>

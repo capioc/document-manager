@@ -5,52 +5,64 @@
   (change)="onFilesAdded()"
   multiple
 />
-<div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
-    <h1 mat-dialog-title>Upload Files</h1>
-    <div>
-      <button
-        [disabled]="uploading || uploadSuccessful"
-        mat-raised-button
-        color="primary"
-        class="add-files-btn"
-        (click)="addFiles()"
-      >
-        Add Files
-      </button>
-      <button
-      mat-raised-button
+<div class="container">
+  <mat-toolbar color='none'>
+  <h2 mat-dialog-title>Upload Files</h2>
+  <div class="toolbar-actions">
+    <button
+      [disabled]="uploading || uploadSuccessful"
+      mat-stroked-button
+      color="primary"
+      class="add-files-btn"
+      (click)="addFiles()"
+    >
+      Add Files
+    </button>
+    <button
+      mat-stroked-button
       color="primary"
       class="add-files-btn"
       (click)="openAssignDialog()"
     >
       Assign Files
     </button>
-    </div>
-  
-    <!-- This is the content of the dialog, containing a list of the files to upload -->
-    <mat-dialog-content fxFlex>
-      <mat-list>
-        <mat-list-item *ngFor="let file of files">
-          <h4 mat-line>{{file.name}}</h4>
-          <mat-progress-bar
-            *ngIf="progress"
-            mode="determinate"
-            [value]="progress[file.name].progress | async"
-          ></mat-progress-bar>
-        </mat-list-item>
-      </mat-list>
-    </mat-dialog-content>
-  
-    <!-- This are the actions of the dialog, containing the primary and the cancel button-->
-    <mat-dialog-actions class="actions">
-      <button *ngIf="showCancelButton" mat-button mat-dialog-close>Cancel</button>
-      <button
-        mat-raised-button
-        color="primary"
-        [disabled]="!canBeClosed"
-        (click)="closeDialog()"
-      >
-        {{primaryButtonText}}
-      </button>
-    </mat-dialog-actions>
   </div>
+</mat-toolbar>
+
+  <!-- This is the content of the dialog, containing a list of the files to upload -->
+  <mat-dialog-content>
+    <mat-list class="files-column">
+      <h3>Files</h3>
+      <mat-list-item *ngFor="let file of files">
+        
+        <mat-progress-spinner
+          *ngIf="progress"
+          mode="determinate"
+          diameter="18"
+          [value]="progress[file.name].progress | async"
+        ></mat-progress-spinner>
+        <h4>{{ file.name }}</h4>
+      </mat-list-item>
+    </mat-list>
+    <mat-list class="assigned-column">
+      <h3>Assigned to</h3>
+      <mat-list-item *ngFor="let user of assignedUsers">
+        <span><h4>{{ user.firstname }}</h4></span>
+        <span style="margin-left: 8px;"><h4>{{ user.lastname }}</h4></span>
+      </mat-list-item>
+    </mat-list>
+  </mat-dialog-content>
+
+  <!-- This are the actions of the dialog, containing the primary and the cancel button-->
+  <mat-dialog-actions class="actions">
+    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!canBeClosed"
+      (click)="closeDialog()"
+    >
+      {{ primaryButtonText }}
+    </button>
+  </mat-dialog-actions>
+</div>

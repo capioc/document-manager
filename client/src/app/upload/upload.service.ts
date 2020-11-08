@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http'
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs';
+import { User } from '../user/user';
 
 const url = 'http://localhost:3000/upload'
 
@@ -17,13 +18,14 @@ export class UploadService {
 
   constructor(private http: HttpClient) {}
 
-  public upload( files: Set<File>): { [key: string]: { progress: Observable<number> } } {
+  public upload( files: Set<File>, assignedUsers: User[]): { [key: string]: { progress: Observable<number> } } {
     // this will be the our resulting map
     const status: { [key: string]: { progress: Observable<number> } } = {};
 
     files.forEach(file => {
       // create a new multipart-form for every file
       const formData: FormData = new FormData();
+      formData.append('assignees', JSON.stringify(assignedUsers))
       formData.append('file', file, file.name);
 
       // create a http-post request and pass the form

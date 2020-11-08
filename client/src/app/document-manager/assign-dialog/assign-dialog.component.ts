@@ -1,6 +1,6 @@
 import {COMMA, ENTER} from '@angular/cdk/keycodes'; 
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from 'src/app/user/user.service';
 import { FormControl } from '@angular/forms';
 import { User } from 'src/app/user/user';
@@ -21,28 +21,30 @@ export class AssignDialogComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   userControl = new FormControl();
   users$: Observable<User[]>;
-  assignedUsers: User[];
+  // assignedUsers: User[];
   private searchTerms = new Subject<string>();
   
   @ViewChild('userInput') userInput: ElementRef<HTMLInputElement>;
   // @ViewChild('auto') matAutocomplete: MatAutocomplete;
   constructor(
     public dialogRef: MatDialogRef<AssignDialogComponent>,
-    public userService: UserService
+    public userService: UserService,
+    @Inject(MAT_DIALOG_DATA) public assignedUsers: User[]
   ) { }
 
   ngOnInit(): void {
-    this.assignedUsers = [];
+    if (!this.assignedUsers) this.assignedUsers = [];
+    
     this.users$ = this.userControl.valueChanges
       .pipe(
-       debounceTime(300),
+        debounceTime(300),
 
-      // ignore new term if same as previous term
-      distinctUntilChanged(),
-      tap(x => console.log('ngOn',x)),
+        // ignore new term if same as previous term
+        distinctUntilChanged(),
+        tap(x => console.log('ngOn',x)),
 
-      // switch to new search observable each time the term changes
-      switchMap((term: string) => this.userService.getUsersByName(term)),
+        // switch to new search observable each time the term changes
+        switchMap((term: string) => this.userService.getUsersByName(term)),
       );
   }
 
