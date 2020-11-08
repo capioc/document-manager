@@ -10,6 +10,10 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { UploadModule } from '../upload/upload.module';
+import { MatListModule } from '@angular/material/list';
 
 
 
@@ -24,8 +28,12 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatChipsModule,
     MatDialogModule,
+    MatListModule,
+    MatPaginatorModule,
+    MatToolbarModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    UploadModule
   ],
   exports: [
     DocumentListComponent

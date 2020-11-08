@@ -12,10 +12,31 @@ exports.createDocument = async function (document) {
     }
 }
 
-exports.getDocumentsAll = async function () {
+exports.getDocumentsAll = function (skip = 0, limit = 5) {
     try {
-        const documents = await Document.find();
-        return documents;
+        return Document.find({})
+                        .sort({ createdAt: -1 })
+                        .skip(skip)
+                        .limit(limit);
+
+    } catch (error) {
+        console.log(error);
+        return 'error';
+    }
+}
+
+exports.getCollectionSize = function () {
+    try {
+        return Document.countDocuments()
+    } catch (error) {
+        console.log(error);
+        return 'error';
+    }
+}
+
+exports.deleteDocument = function (id) {
+    try {
+        return Document.deleteOne({_id: id})
     } catch (error) {
         console.log(error);
         return 'error';

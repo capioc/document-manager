@@ -1,0 +1,52 @@
+.list-item {
+    padding-right: 16px;
+    color: rgba(0,0,0,.54)
+
+}
+
+.item-name {
+    flex: 0 1 55%;
+}
+
+.item-type {
+    flex: 0 1 10%;
+}
+
+.item-users-container {
+    color: black;
+    flex: 0 1 30%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.item-user {
+    padding-left: 24px;
+}
+
+.delete-button {
+    flex: 0 1 5%
+}
+
+mat-list-item {
+    border-bottom: 1px solid gainsboro;
+    // justify-content: space-between;
+
+
+    h4 {
+        margin: 0;
+        color: rgba(0,0,0,.72);
+        fill: rgba(0,0,0,.72);
+        font-weight: 500;
+    }
+}
+
+.document-list-container {
+    width: 80%;
+    margin: auto;
+}
+
+.actions-toolbar {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}

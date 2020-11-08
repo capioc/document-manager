@@ -1,21 +1,45 @@
-<p>document-list works!</p>
-
-<div>
-    <ul class="document-list">
-        <li *ngFor="let document of documents">
-          <span class="badge">{{document.id}}</span> {{document.name}} - {{document.path}}
-        </li>
-      </ul>
-</div>
+<mat-toolbar class="app-toolbar">
+  <h1>Document Manager</h1>
+</mat-toolbar>
+<mat-toolbar class="actions-toolbar">
+  <app-upload (uploadFinished)="onUploadFinished($event)"></app-upload>
+  <mat-paginator
+    [length]="totalNumber"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onChangePage($event)"
+  >
+  </mat-paginator>
+</mat-toolbar>
 
 <div class="document-list-container">
-    <div class="document-list">
-        <div class="document-list-item">
+  <div class="document-list">
+    <!-- <div class="document-list-item">
             <div class="document-list-item-row">
                 <div class="document-list-item-column"></div>
                 <div class="document-list-item-column"></div>
                 <div class="document-list-item-column"></div>
             </div>
+        </div> -->
+    <mat-list>
+      <h2>Your documents</h2>
+      <mat-list-item *ngFor="let document of documents">
+        <h4 class="list-item item-name">{{ document.name }}</h4>
+        <div class="list-item item-type">{{ document.type }}</div>
+        <div class="list-item item-users-container">
+            <div *ngFor="let user of document.assignees" class="item-user">
+                <span>
+                    {{ user.firstname }}
+                </span>
+                <span>
+                    {{ user.lastname }}
+                </span>
+            </div>
         </div>
-    </div>
+        <button mat-icon-button (click)="deleteDocument(document)">
+            <mat-icon color="warn">delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </div>
 </div>
