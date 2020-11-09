@@ -17,5 +17,5 @@ You'll need
 
 ## IMPORTANT NOTE
 When finishing the upload of files, refresh the page to see the new uploads.
-
+![](upload-use.gif)
 ## TODO: user manual
