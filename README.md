@@ -15,4 +15,7 @@ You'll need
 3. run `docker-compose up` from your system's terminal
 4. visit https://localhost on any browser
 
+## IMPORTANT NOTE
+When finishing the upload of files, refresh the page to see the new uploads.
+
 ## TODO: user manual
