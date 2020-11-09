@@ -1,5 +1,6 @@
 const express = require('express');
 const upload = require('./upload');
+const seed = require('./seed');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -12,6 +13,7 @@ const handleError = (error) => console.error('error handler\n',error);
 (async () => {
   try {
     await mongoose.connect('mongodb://mongodb:27017/test', { useNewUrlParser: true });
+    seed.import();
   } catch (error) {
     handleError(error);
   }
@@ -38,4 +40,3 @@ app.post('/upload', upload);
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 })
-

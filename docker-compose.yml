@@ -5,7 +5,7 @@ services:
     restart: always
     build: ./client
     ports:
-      - '8000:4200'
+      - '80:80'
     volumes:
       - ./client:/usr/src/app
   server:
@@ -16,8 +16,8 @@ services:
       NODE_ENV: development
     ports:
       - '3000:3000'
-    volumes:
-      - ./server:/usr/src/app
+    # volumes:
+    #   - ./server:/usr/src/app
     external_links:
       - mongo
   mongodb:
